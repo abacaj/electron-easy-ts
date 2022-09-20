@@ -1,9 +1,11 @@
 import * as isDev from 'electron-is-dev';
-import { startDev } from './app/dev';
-import { startProd } from './app/prod';
 
 if (isDev) {
-  startDev().catch(console.error);
+  import('./app/dev').then((dev) => {
+    dev.startDev();
+  });
 } else {
-  startProd().catch(console.error);
+  import('./app/prod').then((dev) => {
+    dev.startProd();
+  });
 }

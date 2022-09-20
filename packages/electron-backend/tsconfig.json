@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "build",
+    "baseUrl": "src",
     "types": [],
     "moduleResolution": "node",
     "sourceMap": true,
@@ -10,5 +11,5 @@
     "noImplicitAny": false,
     "suppressImplicitAnyIndexErrors": true
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "src/app/dev.ts"]
 }
