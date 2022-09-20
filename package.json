@@ -1,0 +1,25 @@
+{
+  "name": "electron-easy-ts",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "react": "yarn workspace react-frontend start",
+    "asar": "rimraf asar && yarn workspace electron-backend asar",
+    "electron": "yarn workspace electron-backend start",
+    "react-build": "yarn workspace react-frontend build",
+    "electron-compile": "yarn workspace electron-backend compile",
+    "electron-build": "yarn workspace electron-backend build",
+    "electron-v": "electron -v",
+    "dev": "concurrently \"yarn react\" \"yarn electron\"",
+    "build": "yarn react-build && yarn electron-compile && node scripts/post-build && yarn electron-build"
+  },
+  "devDependencies": {
+    "concurrently": "^7.4.0",
+    "cross-env": "^7.0.3",
+    "fs-extra": "^10.1.0",
+    "rimraf": "^3.0.2"
+  }
+}

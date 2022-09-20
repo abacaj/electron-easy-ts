@@ -1,0 +1,64 @@
+{
+  "name": "electron-backend",
+  "version": "0.1.0",
+  "main": "./build/index.js",
+  "author": "electron-easy-ts",
+  "description": "My app description",
+  "private": true,
+  "dependencies": {
+    "electron": "^20.1.4",
+    "electron-is-dev": "^2.0.0",
+    "lodash": "^4.17.21"
+  },
+  "build": {
+    "productName": "myapp",
+    "copyright": "Copyright © 2022 My App",
+    "artifactName": "${productName}-${version}-install.${ext}",
+    "appId": "com.myappid",
+    "files": [
+      "build/**/*"
+    ],
+    "directories": {
+      "buildResources": "frontend",
+      "output": "../../dist"
+    },
+    "win": {
+      "icon": "build/frontend/images/logo.png",
+      "legalTrademarks": "Copyright © 2022 My App",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "asar": "asar extract ../../dist/win-unpacked/resources/app.asar ../../asar",
+    "start": "concurrently \"tsc -w\" \"nodemon --watch build --exec electron build/index.js\"",
+    "compile": "rimraf build/ && rimraf ../../dist && tsc",
+    "build": "electron-builder build --win --x64",
+    "shell": "cross-env electron build/index.js"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.18",
+    "asar": "^3.2.0",
+    "electron-builder": "^23.3.3",
+    "nodemon": "^2.0.20",
+    "typescript": "^4.8.3"
+  }
+}
