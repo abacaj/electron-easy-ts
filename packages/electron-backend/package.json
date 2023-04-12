@@ -32,13 +32,26 @@
           ]
         }
       ]
+    },
+    "linux": {
+      "icon": "build/frontend/images/logo.png",
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "category": "Utility"
     }
   },
   "scripts": {
     "asar": "asar extract ../../dist/win-unpacked/resources/app.asar ../../asar",
     "start": "concurrently \"tsc -w\" \"nodemon --watch build --exec electron build/index.js\"",
     "compile": "rimraf build/ && rimraf ../../dist && tsc",
-    "build": "electron-builder build --win --x64",
+    "build-windows": "electron-builder build --win --x64",
+    "build-linux": "electron-builder build --linux",
     "shell": "cross-env electron build/index.js"
   },
   "browserslist": {
@@ -56,8 +69,9 @@
   "devDependencies": {
     "@types/node": "^18.7.18",
     "asar": "^3.2.0",
-    "electron": "20.1.4",
-    "electron-builder": "^23.3.3",
+    "electron": "23.2.1",
+    "app-builder-bin": "4.1.2",
+    "electron-builder": "23.6.0",
     "nodemon": "^2.0.20",
     "typescript": "^4.8.3"
   }

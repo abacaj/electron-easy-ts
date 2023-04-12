@@ -3,23 +3,25 @@
   "version": "0.1.0",
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/electron-backend",
+    "packages/react-frontend"
   ],
   "scripts": {
-    "react": "yarn workspace react-frontend start",
-    "asar": "rimraf asar && yarn workspace electron-backend asar",
-    "electron": "yarn workspace electron-backend start",
-    "react-build": "yarn workspace react-frontend build",
-    "electron-compile": "yarn workspace electron-backend compile",
-    "electron-build": "yarn workspace electron-backend build",
+    "react": "npm run start --workspace=react-frontend",
+    "asar": "rimraf asar && npm run asar --workspace=electron-backend",
+    "electron": "npm run start --workspace=electron-backend",
+    "react-build": "npm run build --workspace=react-frontend",
+    "electron-compile": "npm run compile --workspace=electron-backend",
+    "electron-build": "npm run build-linux --workspace=electron-backend",
     "electron-v": "electron -v",
-    "dev": "concurrently \"yarn react\" \"yarn electron\"",
-    "build": "yarn react-build && yarn electron-compile && node scripts/post-build && yarn electron-build"
+    "dev": "concurrently \"npm run react\" \"wait-on http://localhost:3000 && npm run electron\"",
+    "build": "npm run react-build && npm run electron-compile && node scripts/post-build && npm run electron-build"
   },
   "devDependencies": {
     "concurrently": "^7.4.0",
     "cross-env": "^7.0.3",
     "fs-extra": "^10.1.0",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "wait-on": "^7.0.1"
   }
 }

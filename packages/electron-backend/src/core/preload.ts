@@ -1,4 +1,4 @@
-import { app, contextBridge, ipcRenderer, dialog } from 'electron';
+import { contextBridge, ipcRenderer } from 'electron';
 
 const events = {
   send: (channel, ...data) => ipcRenderer.send(channel, ...data),

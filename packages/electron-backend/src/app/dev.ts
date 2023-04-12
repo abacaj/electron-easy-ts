@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, globalShortcut, clipboard } from 'electron';
 import { resolve } from 'path';
 import { bindAppEvents } from './events';
 
@@ -7,8 +7,13 @@ export async function startDev() {
   await app.whenReady();
 
   const mainWindow = new BrowserWindow({
-    frame: true,
-    show: true,
+    width: 600,
+    height: 400,
+    transparent: true,
+    frame: false,
+    alwaysOnTop: true,
+    skipTaskbar: false,
+    show: false,
     webPreferences: {
       webviewTag: false,
       nodeIntegration: false, // is default value after Electron v5
@@ -22,11 +27,37 @@ export async function startDev() {
   bindAppEvents(mainWindow);
 
   // open the DevTools
-  mainWindow.webContents.openDevTools({
-    mode: 'right',
-  });
+  // mainWindow.webContents.openDevTools({
+  //   mode: 'right',
+  // });
 
   mainWindow.moveTop();
   mainWindow.focus();
   mainWindow.maximize();
+
+  const ret = globalShortcut.register('CmdOrCtrl+Alt+T', () => {
+    // Read the clipboard text
+    const clipboardText = clipboard.readText();
+    if (mainWindow.isVisible()) {
+      mainWindow.hide();
+    } else {
+      // Send the clipboard text to the renderer process
+      mainWindow.webContents.send('clipboard-text', clipboardText);
+      // Fade-in effect
+      // let opacity = 0;
+      // const fadeInInterval = setInterval(() => {
+      //   opacity += 0.1;
+      //   mainWindow.setOpacity(opacity);
+
+      //   if (opacity >= 1) {
+      //     clearInterval(fadeInInterval);
+      //   }
+      // }, 50); // Adjust the interval duration to control the animation speed
+      mainWindow.show();
+    }
+  });
+
+  if (!ret) {
+    console.log('Global shortcut registration failed');
+  }
 }
